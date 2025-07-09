@@ -1,19 +1,24 @@
-﻿using System;
+﻿using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Villain
 {
     public partial class ReservasiForm : Form
     {
-        private string connectionString = "Server=MSI\\RM_FAKHRI_W;Database=VillainApps;Trusted_Connection=True;";
-        
+        Koneksi kn = new Koneksi();
+        string strKonek = "";
+
         private bool isEditMode = false;
 
         public ReservasiForm()
         {
             InitializeComponent();
+            strKonek = kn.connectionString();
         }
 
         private void ReservasiForm_Load(object sender, EventArgs e)
@@ -27,7 +32,7 @@ namespace Villain
 
         private void LoadData()
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(strKonek))
             {
                 try
                 {
@@ -46,7 +51,7 @@ namespace Villain
 
         private void LoadComboPengunjung()
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(strKonek))
             {
                 try
                 {
@@ -70,7 +75,7 @@ namespace Villain
 
         private void LoadComboVilla()
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(strKonek))
             {
                 try
                 {
@@ -103,6 +108,40 @@ namespace Villain
             isEditMode = false;
         }
 
+        private bool ValidasiInput()
+        {
+            if (cmbPengunjung.SelectedIndex == -1)
+            {
+                MessageBox.Show("Pengunjung harus dipilih.", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbPengunjung.Focus();
+                return false;
+            }
+
+            if (cmbVilla.SelectedIndex == -1)
+            {
+                MessageBox.Show("Villa harus dipilih.", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbVilla.Focus();
+                return false;
+            }
+
+            if (cmbStatus.SelectedIndex == -1)
+            {
+                MessageBox.Show("Status reservasi harus dipilih.", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbStatus.Focus();
+                return false;
+            }
+
+            if (dtpCheckOut.Value.Date <= dtpCheckIn.Value.Date)
+            {
+                MessageBox.Show("Tanggal check-out harus lebih besar dari check-in.", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                dtpCheckOut.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
+
         private void dgvReservasi_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -122,13 +161,10 @@ namespace Villain
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (cmbPengunjung.SelectedIndex == -1 || cmbVilla.SelectedIndex == -1)
-            {
-                MessageBox.Show("Harap pilih Pengunjung dan Villa.");
+            if (!ValidasiInput())
                 return;
-            }
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(strKonek))
             {
                 conn.Open();
                 SqlTransaction transaction = conn.BeginTransaction(); // Mulai transaksi
@@ -208,13 +244,10 @@ namespace Villain
                 return;
             }
 
-            if (cmbPengunjung.SelectedIndex == -1 || cmbVilla.SelectedIndex == -1)
-            {
-                MessageBox.Show("Harap pilih Pengunjung dan Villa.");
+            if (!ValidasiInput())
                 return;
-            }
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(strKonek))
             {
                 conn.Open();
                 SqlTransaction transaction = conn.BeginTransaction(); // Mulai transaksi
@@ -267,7 +300,7 @@ namespace Villain
 
             if (confirmResult == DialogResult.Yes)
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(strKonek))
                 {
                     conn.Open();
                     SqlTransaction transaction = conn.BeginTransaction();
@@ -297,6 +330,79 @@ namespace Villain
                     }
                 }
             }
+        }
+
+        // Method untuk menampilkan preview data di DataGridView
+        private void PreviewData(string filePath)
+        {
+            try
+            {
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    IWorkbook workbook = new XSSFWorkbook(fs); // Membuka workbook Excel
+                    ISheet sheet = workbook.GetSheetAt(0);      // Mendapatkan worksheet pertama
+                    DataTable dt = new DataTable();
+
+                    // Membaca header kolom
+                    IRow headerRow = sheet.GetRow(0);
+                    foreach (var cell in headerRow.Cells)
+                    {
+                        dt.Columns.Add(cell.ToString());
+                    }
+
+                    // Membaca sisa data
+                    for (int i = 1; i <= sheet.LastRowNum; i++) // Lewati baris header
+                    {
+                        IRow dataRow = sheet.GetRow(i);
+                        DataRow newRow = dt.NewRow();
+                        int cellIndex = 0;
+                        foreach (var cell in dataRow.Cells)
+                        {
+                            newRow[cellIndex] = cell.ToString();
+                            cellIndex++;
+                        }
+                        dt.Rows.Add(newRow);
+                    }
+
+                    // Membuka PreviewForm dan mengirimkan DataTable ke form tersebut
+                    FormPreviewData previewForm = new FormPreviewData(dt);
+                    previewForm.ShowDialog(); // Tampilkan PreviewForm
+
+                }
+            }
+            catch (Exception ex)
+            {
+                string userFriendlyMessage = "Terjadi kesalahan saat membaca file Excel. Pastikan file tidak kosong dan memiliki data pada baris pertama.";
+
+                if (ex is NullReferenceException)
+                {
+                    MessageBox.Show(userFriendlyMessage + "\n\nDetail: " + ex.Message, "Kesalahan Baca File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show("Terjadi kesalahan: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+        }
+
+        // Event untuk memilih file dan mempreview data
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Excel Files (*.xlsx;*.xlsm)|*.xlsx;*.xlsm|All Files (*.*)|*.*";
+            openFileDialog.Title = "Pilih File Excel";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+                PreviewData(filePath);  // Display preview before importing
+            }
+        }
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            ReportReservasi formReportReservasi = new ReportReservasi();
+            formReportReservasi.Show(); // Menampilkan FormKegiatan
+            this.Hide(); // Menyembunyikan Form1
         }
     }
 }

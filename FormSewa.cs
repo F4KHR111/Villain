@@ -1,9 +1,12 @@
-﻿using System;
+﻿using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,11 +16,13 @@ namespace Villain
 {
     public partial class FormSewa : Form
     {
-        private string connectionString = "Server=MSI\\RM_FAKHRI_W;Database=VillainApps;Trusted_Connection=True;";
-        
+        Koneksi kn = new Koneksi();
+        string strKonek = "";
+
         public FormSewa()
         {
             InitializeComponent();
+            strKonek = kn.connectionString();
             LoadComboPengunjung();
             LoadComboVilla();
             LoadStatusCombo();
@@ -44,7 +49,7 @@ namespace Villain
 
         private void LoadComboPengunjung()
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(strKonek))
             {
                 try
                 {
@@ -68,7 +73,7 @@ namespace Villain
 
         private void LoadComboVilla()
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(strKonek))
             {
                 try
                 {
@@ -94,7 +99,7 @@ namespace Villain
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(strKonek))
                 {
                     string query = "EXEC sp_SelectAllKontrakSewa"; // Stored Procedure untuk select semua kontrak
                     SqlDataAdapter da = new SqlDataAdapter(query, conn);
@@ -128,7 +133,7 @@ namespace Villain
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(strKonek))
                 {
                     conn.Open();
                     SqlTransaction transaction = conn.BeginTransaction();
@@ -209,7 +214,7 @@ namespace Villain
 
             try
             {
-                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlConnection conn = new SqlConnection(strKonek))
                 {
                     conn.Open();
                     SqlTransaction transaction = conn.BeginTransaction();
@@ -256,7 +261,7 @@ namespace Villain
             {
                 try
                 {
-                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    using (SqlConnection conn = new SqlConnection(strKonek))
                     {
                         conn.Open();
                         SqlTransaction transaction = conn.BeginTransaction();
@@ -299,5 +304,80 @@ namespace Villain
                 cmbStatus.SelectedItem = row.Cells["StatusPembayaran"].Value.ToString();
             }
         }
+
+        // Method untuk menampilkan preview data di DataGridView
+        private void PreviewData(string filePath)
+        {
+            try
+            {
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    IWorkbook workbook = new XSSFWorkbook(fs); // Membuka workbook Excel
+                    ISheet sheet = workbook.GetSheetAt(0);      // Mendapatkan worksheet pertama
+                    DataTable dt = new DataTable();
+
+                    // Membaca header kolom
+                    IRow headerRow = sheet.GetRow(0);
+                    foreach (var cell in headerRow.Cells)
+                    {
+                        dt.Columns.Add(cell.ToString());
+                    }
+
+                    // Membaca sisa data
+                    for (int i = 1; i <= sheet.LastRowNum; i++) // Lewati baris header
+                    {
+                        IRow dataRow = sheet.GetRow(i);
+                        DataRow newRow = dt.NewRow();
+                        int cellIndex = 0;
+                        foreach (var cell in dataRow.Cells)
+                        {
+                            newRow[cellIndex] = cell.ToString();
+                            cellIndex++;
+                        }
+                        dt.Rows.Add(newRow);
+                    }
+
+                    // Membuka PreviewForm dan mengirimkan DataTable ke form tersebut
+                    FormPreviewData previewForm = new FormPreviewData(dt);
+                    previewForm.ShowDialog(); // Tampilkan PreviewForm
+
+                }
+            }
+            catch (Exception ex)
+            {
+                string userFriendlyMessage = "Terjadi kesalahan saat membaca file Excel. Pastikan file tidak kosong dan memiliki data pada baris pertama.";
+
+                if (ex is NullReferenceException)
+                {
+                    MessageBox.Show(userFriendlyMessage + "\n\nDetail: " + ex.Message, "Kesalahan Baca File", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    MessageBox.Show("Terjadi kesalahan: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+        }
+
+        // Event untuk memilih file dan mempreview data
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Excel Files (*.xlsx;*.xlsm)|*.xlsx;*.xlsm|All Files (*.*)|*.*";
+            openFileDialog.Title = "Pilih File Excel";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+                PreviewData(filePath);  // Display preview before importing
+            }
+        }
+
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            ReportSewa formReportSewa = new ReportSewa();
+            formReportSewa.Show(); // Menampilkan FormKegiatan
+            this.Hide(); // Menyembunyikan Form1
+        }
+
     }
 }

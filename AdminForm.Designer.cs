@@ -23,6 +23,7 @@
             this.btnPengunjung = new System.Windows.Forms.Button();
             this.btnReservasi = new System.Windows.Forms.Button();
             this.btnKontrakSewa = new System.Windows.Forms.Button();
+            this.btnGrafik = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnVilla
@@ -65,9 +66,20 @@
             this.btnKontrakSewa.UseVisualStyleBackColor = true;
             this.btnKontrakSewa.Click += new System.EventHandler(this.btnKontrakSewa_Click);
             // 
+            // btnGrafik
+            // 
+            this.btnGrafik.Location = new System.Drawing.Point(50, 289);
+            this.btnGrafik.Name = "btnGrafik";
+            this.btnGrafik.Size = new System.Drawing.Size(330, 44);
+            this.btnGrafik.TabIndex = 3;
+            this.btnGrafik.Text = "Lihat Grafik";
+            this.btnGrafik.UseVisualStyleBackColor = true;
+            this.btnGrafik.Click += new System.EventHandler(this.btnGrafik_Click);
+            // 
             // AdminForm
             // 
-            this.ClientSize = new System.Drawing.Size(434, 311);
+            this.ClientSize = new System.Drawing.Size(434, 359);
+            this.Controls.Add(this.btnGrafik);
             this.Controls.Add(this.btnKontrakSewa);
             this.Controls.Add(this.btnReservasi);
             this.Controls.Add(this.btnPengunjung);
@@ -75,6 +87,9 @@
             this.Name = "AdminForm";
             this.Text = "Admin Form";
             this.ResumeLayout(false);
+
         }
+
+        private System.Windows.Forms.Button btnGrafik;
     }
 }

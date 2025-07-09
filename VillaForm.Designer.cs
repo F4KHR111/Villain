@@ -53,6 +53,8 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVilla)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericHarga)).BeginInit();
             this.SuspendLayout();
@@ -219,11 +221,33 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // btnImport
+            // 
+            this.btnImport.Location = new System.Drawing.Point(110, 369);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(200, 30);
+            this.btnImport.TabIndex = 18;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(18, 270);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 35);
+            this.button3.TabIndex = 19;
+            this.button3.Text = "Report";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // VillaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(900, 430);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnImport);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblHarga);
             this.Controls.Add(this.lblDeskripsi);
@@ -253,5 +277,7 @@
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.Button button3;
     }
 }

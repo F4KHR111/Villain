@@ -24,10 +24,11 @@
             this.lblIDPengunjung = new System.Windows.Forms.Label();
             this.lblNamaPengunjung = new System.Windows.Forms.Label();
             this.lblNomorHP = new System.Windows.Forms.Label();
-            this.btnSave = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPengunjung)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,16 +98,6 @@
             this.lblNomorHP.TabIndex = 6;
             this.lblNomorHP.Text = "No. HP / Kontak";
             // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(154, 350);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(80, 30);
-            this.btnSave.TabIndex = 7;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
             // btnDelete
             // 
             this.btnDelete.Location = new System.Drawing.Point(244, 350);
@@ -137,15 +128,36 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.btnAdd_Click);
             // 
+            // btnImport
+            // 
+            this.btnImport.Location = new System.Drawing.Point(154, 350);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(80, 30);
+            this.btnImport.TabIndex = 7;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(425, 310);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(80, 26);
+            this.button3.TabIndex = 9;
+            this.button3.Text = "Report";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // PengunjungForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 401);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnImport);
             this.Controls.Add(this.lblNomorHP);
             this.Controls.Add(this.lblNamaPengunjung);
             this.Controls.Add(this.lblIDPengunjung);
@@ -171,9 +183,10 @@
         private System.Windows.Forms.Label lblIDPengunjung;
         private System.Windows.Forms.Label lblNamaPengunjung;
         private System.Windows.Forms.Label lblNomorHP;
-        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.Button button3;
     }
 }

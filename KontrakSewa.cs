@@ -1,6 +1,9 @@
-﻿using System;
+﻿using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq.Expressions;
 using System.Windows.Forms;
 
@@ -8,7 +11,7 @@ namespace Villain
 {
     public partial class KontrakSewaForm : Form
     {
-        private string connectionString = "Server=MSI\\RM_FAKHRI_W;Database=VillainApps;Trusted_Connection=True;";
+        string connectionString = "Data Source = LAPTOP-UVP4GKT4\\FARHAT_ASHARFILL; Initial Catalog = VillainApps; Integrated Security = True";
         private bool isEditMode = false;
         private bool isAddMode = false;
 
@@ -347,5 +350,56 @@ namespace Villain
                 EnableInputs(false);
             }
         }
+
+        // Method untuk menampilkan preview data di DataGridView
+        private void PreviewData(string filePath)
+        {
+            try
+            {
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    IWorkbook workbook = new XSSFWorkbook(fs); // Membuka workbook Excel
+                    ISheet sheet = workbook.GetSheetAt(0);      // Mendapatkan worksheet pertama
+                    DataTable dt = new DataTable();
+
+                    // Membaca header kolom
+                    IRow headerRow = sheet.GetRow(0);
+                    foreach (var cell in headerRow.Cells)
+                    {
+                        dt.Columns.Add(cell.ToString());
+                    }
+
+                    // Membaca sisa data
+                    for (int i = 1; i <= sheet.LastRowNum; i++) // Lewati baris header
+                    {
+                        IRow dataRow = sheet.GetRow(i);
+                        DataRow newRow = dt.NewRow();
+                        int cellIndex = 0;
+                        foreach (var cell in dataRow.Cells)
+                        {
+                            newRow[cellIndex] = cell.ToString();
+                            cellIndex++;
+                        }
+                        dt.Rows.Add(newRow);
+                    }
+
+                    // Membuka PreviewForm dan mengirimkan DataTable ke form tersebut
+                    FormPreviewData previewForm = new FormPreviewData(dt);
+                    previewForm.ShowDialog(); // Tampilkan PreviewForm
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error reading the Excel file: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Event untuk memilih file dan mempreview data
+        private void btnImport_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

@@ -43,6 +43,8 @@
             this.lblCheckOut = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
             this.cmbStatus = new System.Windows.Forms.ComboBox();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.btnReport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReservasi)).BeginInit();
             this.SuspendLayout();
             // 
@@ -196,9 +198,31 @@
             this.cmbStatus.Size = new System.Drawing.Size(200, 24);
             this.cmbStatus.TabIndex = 16;
             // 
+            // btnImport
+            // 
+            this.btnImport.Location = new System.Drawing.Point(350, 352);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(75, 26);
+            this.btnImport.TabIndex = 17;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // btnReport
+            // 
+            this.btnReport.Location = new System.Drawing.Point(350, 388);
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(75, 26);
+            this.btnReport.TabIndex = 17;
+            this.btnReport.Text = "Report";
+            this.btnReport.UseVisualStyleBackColor = true;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+            // 
             // ReservasiForm
             // 
             this.ClientSize = new System.Drawing.Size(640, 450);
+            this.Controls.Add(this.btnReport);
+            this.Controls.Add(this.btnImport);
             this.Controls.Add(this.cmbStatus);
             this.Controls.Add(this.dgvReservasi);
             this.Controls.Add(this.lblIDReservasi);
@@ -225,5 +249,7 @@
         }
 
         private System.Windows.Forms.ComboBox cmbStatus;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.Button btnReport;
     }
 }

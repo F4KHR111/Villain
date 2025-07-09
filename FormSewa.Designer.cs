@@ -44,6 +44,8 @@
             this.lblVilla = new System.Windows.Forms.Label();
             this.lblPengunjung = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.btnReport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKontrakSewa)).BeginInit();
             this.SuspendLayout();
             // 
@@ -198,11 +200,33 @@
             this.label1.TabIndex = 25;
             this.label1.Text = "ID Kontrak:";
             // 
+            // btnImport
+            // 
+            this.btnImport.Location = new System.Drawing.Point(416, 214);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(80, 30);
+            this.btnImport.TabIndex = 40;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
+            // 
+            // btnReport
+            // 
+            this.btnReport.Location = new System.Drawing.Point(505, 214);
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(80, 30);
+            this.btnReport.TabIndex = 40;
+            this.btnReport.Text = "Report";
+            this.btnReport.UseVisualStyleBackColor = true;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+            // 
             // FormSewa
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 556);
+            this.Controls.Add(this.btnReport);
+            this.Controls.Add(this.btnImport);
             this.Controls.Add(this.dgvKontrakSewa);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnEdit);
@@ -244,5 +268,7 @@
         private System.Windows.Forms.Label lblVilla;
         private System.Windows.Forms.Label lblPengunjung;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.Button btnReport;
     }
 }

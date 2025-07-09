@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSetSewa" targetNamespace="http://tempuri.org/DataSetSewa.xsd" xmlns:mstns="http://tempuri.org/DataSetSewa.xsd" xmlns="http://tempuri.org/DataSetSewa.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="VillainAppsConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="VillainAppsConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Villain.Properties.Settings.GlobalReference.Default.VillainAppsConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DataTable1TableAdapter" GeneratorDataComponentClassName="DataTable1TableAdapter" Name="DataTable1" UserDataComponentName="DataTable1TableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="VillainAppsConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT ks.KontrakID, r.PengunjungID, p.NamaPengunjung, r.VillaID, v.NamaVilla, r.TanggalCheckIn, r.TanggalCheckOut, ks.Biaya, ks.StatusPembayaran
+FROM     KontrakSewa AS ks INNER JOIN
+                  Reservasi AS r ON ks.ReservasiID = r.ReservasiID INNER JOIN
+                  Pengunjung AS p ON r.PengunjungID = p.PengunjungID INNER JOIN
+                  Villa AS v ON r.VillaID = v.VillaID</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="KontrakID" DataSetColumn="KontrakID" />
+              <Mapping SourceColumn="PengunjungID" DataSetColumn="PengunjungID" />
+              <Mapping SourceColumn="NamaPengunjung" DataSetColumn="NamaPengunjung" />
+              <Mapping SourceColumn="VillaID" DataSetColumn="VillaID" />
+              <Mapping SourceColumn="NamaVilla" DataSetColumn="NamaVilla" />
+              <Mapping SourceColumn="TanggalCheckIn" DataSetColumn="TanggalCheckIn" />
+              <Mapping SourceColumn="TanggalCheckOut" DataSetColumn="TanggalCheckOut" />
+              <Mapping SourceColumn="Biaya" DataSetColumn="Biaya" />
+              <Mapping SourceColumn="StatusPembayaran" DataSetColumn="StatusPembayaran" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSetSewa" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="DataSetSewa" msprop:Generator_DataSetName="DataSetSewa">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DataTable1" msprop:Generator_RowEvHandlerName="DataTable1RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable1RowDeleted" msprop:Generator_RowDeletingName="DataTable1RowDeleting" msprop:Generator_RowEvArgName="DataTable1RowChangeEvent" msprop:Generator_TablePropName="DataTable1" msprop:Generator_RowChangedName="DataTable1RowChanged" msprop:Generator_RowChangingName="DataTable1RowChanging" msprop:Generator_TableClassName="DataTable1DataTable" msprop:Generator_RowClassName="DataTable1Row" msprop:Generator_TableVarName="tableDataTable1" msprop:Generator_UserTableName="DataTable1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="KontrakID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnPropNameInRow="KontrakID" msprop:Generator_ColumnPropNameInTable="KontrakIDColumn" msprop:Generator_ColumnVarNameInTable="columnKontrakID" msprop:Generator_UserColumnName="KontrakID" type="xs:int" />
+              <xs:element name="PengunjungID" msprop:Generator_ColumnPropNameInRow="PengunjungID" msprop:Generator_ColumnPropNameInTable="PengunjungIDColumn" msprop:Generator_ColumnVarNameInTable="columnPengunjungID" msprop:Generator_UserColumnName="PengunjungID" type="xs:int" />
+              <xs:element name="NamaPengunjung" msprop:Generator_ColumnPropNameInRow="NamaPengunjung" msprop:Generator_ColumnPropNameInTable="NamaPengunjungColumn" msprop:Generator_ColumnVarNameInTable="columnNamaPengunjung" msprop:Generator_UserColumnName="NamaPengunjung">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="VillaID" msprop:Generator_ColumnPropNameInRow="VillaID" msprop:Generator_ColumnPropNameInTable="VillaIDColumn" msprop:Generator_ColumnVarNameInTable="columnVillaID" msprop:Generator_UserColumnName="VillaID" type="xs:int" />
+              <xs:element name="NamaVilla" msprop:Generator_ColumnPropNameInRow="NamaVilla" msprop:Generator_ColumnPropNameInTable="NamaVillaColumn" msprop:Generator_ColumnVarNameInTable="columnNamaVilla" msprop:Generator_UserColumnName="NamaVilla">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TanggalCheckIn" msprop:Generator_ColumnPropNameInRow="TanggalCheckIn" msprop:Generator_ColumnPropNameInTable="TanggalCheckInColumn" msprop:Generator_ColumnVarNameInTable="columnTanggalCheckIn" msprop:Generator_UserColumnName="TanggalCheckIn" type="xs:dateTime" />
+              <xs:element name="TanggalCheckOut" msprop:Generator_ColumnPropNameInRow="TanggalCheckOut" msprop:Generator_ColumnPropNameInTable="TanggalCheckOutColumn" msprop:Generator_ColumnVarNameInTable="columnTanggalCheckOut" msprop:Generator_UserColumnName="TanggalCheckOut" type="xs:dateTime" />
+              <xs:element name="Biaya" msprop:Generator_ColumnPropNameInRow="Biaya" msprop:Generator_ColumnPropNameInTable="BiayaColumn" msprop:Generator_ColumnVarNameInTable="columnBiaya" msprop:Generator_UserColumnName="Biaya" type="xs:decimal" />
+              <xs:element name="StatusPembayaran" msprop:Generator_ColumnPropNameInRow="StatusPembayaran" msprop:Generator_ColumnPropNameInTable="StatusPembayaranColumn" msprop:Generator_ColumnVarNameInTable="columnStatusPembayaran" msprop:Generator_UserColumnName="StatusPembayaran">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:DataTable1" />
+      <xs:field xpath="mstns:KontrakID" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

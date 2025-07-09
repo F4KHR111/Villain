@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Villain
 {
     public partial class LoginForm : Form
     {
+        Koneksi kn = new Koneksi();
+        string strKonek = "";
         public LoginForm()
         {
             InitializeComponent();
+            strKonek = kn.connectionString();
         }
 
         private void LoginForm_Load(object sender, EventArgs e)
@@ -21,11 +25,11 @@ namespace Villain
             string username = txtUsername.Text.Trim();
             string password = txtPassword.Text.Trim();
 
-            string connectionString = "Data Source=MSI\\RM_FAKHRI_W;Initial Catalog=VillainApps;Integrated Security=True;";
 
             string query = "SELECT Role FROM Users WHERE Username = @username AND Password = @password";
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+
+            using (SqlConnection conn = new SqlConnection(strKonek))
             using (SqlCommand cmd = new SqlCommand(query, conn))
             {
                 cmd.Parameters.AddWithValue("@username", username);
