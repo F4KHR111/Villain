@@ -32,7 +32,12 @@ namespace Villain
             FormSewa formSewa = new FormSewa();
             formSewa.ShowDialog();
         }
-
+        private void btnGrafik_Click(object sender, EventArgs e)
+        {
+            LaporanStatistikVilla laporanStatistik = new LaporanStatistikVilla();
+            laporanStatistik.Show(); // Menampilkan form grafik
+            this.Show();
+        }
 
     }
 }

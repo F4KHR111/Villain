@@ -11,7 +11,7 @@ namespace Villain
             string connectStr = "";
             try
             {
-                connectStr = "Server=192.168.0.116\\FARHAT_ASHARFILL;Database=VillainApps;User ID=sa;Password=Asharf25;";
+                connectStr = "Server=LAPTOP-UVP4GKT4\\FARHAT_ASHARFILL;Initial Catalog=VillainApps;Integrated Security=True;";
                 return connectStr;
             }
             catch (Exception ex)
